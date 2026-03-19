@@ -3,11 +3,21 @@
  * @return {boolean}
  */
 var isPalindrome = function(s) {
-    // Step 1: convert to lowercase and remove non-alphanumeric
-    let cleaned = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    let left = 0;
+    let right = s.length - 1;
 
-    // Step 2: check palindrome
-    let reversed = cleaned.split("").reverse().join("");
+    while (left < right) {
+        // skip non-alphanumeric
+        while (left < right && !/[a-z0-9]/i.test(s[left])) left++;
+        while (left < right && !/[a-z0-9]/i.test(s[right])) right--;
 
-    return cleaned === reversed;
+        if (s[left].toLowerCase() !== s[right].toLowerCase()) {
+            return false;
+        }
+
+        left++;
+        right--;
+    }
+
+    return true;
 };
