@@ -11,14 +11,26 @@
  * @return {ListNode}
  */
 function mergeTwoLists(list1, list2) {
-    if (!list1) return list2;
-    if (!list2) return list1;
+    let dummy = new ListNode(-1); // temporary node
+    let current = dummy;
 
-    if (list1.val < list2.val) {
-        list1.next = mergeTwoLists(list1.next, list2);
-        return list1;
-    } else {
-        list2.next = mergeTwoLists(list1, list2.next);
-        return list2;
+    while (list1 !== null && list2 !== null) {
+        if (list1.val <= list2.val) {
+            current.next = list1;
+            list1 = list1.next;
+        } else {
+            current.next = list2;
+            list2 = list2.next;
+        }
+        current = current.next;
     }
+
+    // Attach remaining nodes
+    if (list1 !== null) {
+        current.next = list1;
+    } else {
+        current.next = list2;
+    }
+
+    return dummy.next;
 }
